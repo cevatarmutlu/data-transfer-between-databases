@@ -8,6 +8,13 @@ The purpose of this project is to gain certain habits. These habits; Unittest, d
 
 # Installation
 
+This project has been developed in a debian based linux environment.
+
+```
+    sudo apt-get install libpq-dev # for psycopg2 module
+    pip install -r requirements.txt
+```
+
 # How to use?
 
 # Contribute
