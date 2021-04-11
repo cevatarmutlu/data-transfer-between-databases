@@ -16,6 +16,12 @@ class PostgreSQL(IDB):
             dbname:dbname
             user: user
             password: password
+        
+        Raises:
+            TypeError: if `host`, `port`, `dbname`, `user`, `password` 
+                is not instance of `str` then raises `TypeError`.
+            ValueError: if `host`, `port`, `dbname`, `user`, `password` 
+                is empty then raises `ValueError`.
 
     """
 
@@ -28,6 +34,21 @@ class PostgreSQL(IDB):
         user='postgres',
         password='123'
     ):
+
+        if  not isinstance(host, str) or
+            not isinstance(port, str) or
+            not isinstance(dbname, str) or
+            not isinstance(user, str) or
+            not isinstance(password, str):
+            raise TypeError('Postgre class parameters must be string.')
+        
+        if  not host or
+            not port or
+            not dbname or
+            not user or
+            not password:
+            raise ValueError('Postgre class parameters not must be empty.')
+        
 
         self.auth = {
             "host": host,
@@ -42,11 +63,11 @@ class PostgreSQL(IDB):
             Connect to PostgreSQL.
 
             Returns:
-                None	
+                None
         """
 
         try:
-                
+            self.conn = py.connect(**self.auth)
         except Exception as e:
             print(e)
             exit(1)
@@ -87,9 +108,8 @@ class PostgreSQL(IDB):
             
             Returns:
                 query_suffix(str): Concatenated values
-
         """
-        
+
         query_suffix = ''
         for row in data:
             query_suffix += '(' + ', '.join(row) + '), '
@@ -105,6 +125,10 @@ class PostgreSQL(IDB):
             
             Returns:
                 None
+            
+            Raises:
+                TypeError: if `data` is not instance of `list` then raises `TypeError`.
+
         """
 
         if not isinstance(data, list):
@@ -132,8 +156,10 @@ class PostgreSQL(IDB):
         print(f"{self.__class__.__name__} DB connection is closed")
 
 if __name__ == "__main__":
-    postgre = PostgreSQL()
+    # postgre = PostgreSQL()
     # postgre.connect()
     # print(postgre.fetch("SELECT * FROM client"))
+    # postgre.insert(data=[('bir', 'iki', 'üç'), ('4', '5', '6')])
     # postgre.disconnect()
-    postgre.insert(data=[('bir', 'iki', 'üç'), ('4', '5', '6')])      
+    pass
+    
