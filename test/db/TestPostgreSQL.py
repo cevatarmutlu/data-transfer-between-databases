@@ -4,7 +4,7 @@ import unittest
 #### Project Scripts ####
 from db.PostgreSQL import PostgreSQL
 
-class TestPostgreSQL(unittest.TestCase):
+class PostgreSQL(unittest.TestCase):
     postgre = PostgreSQL()
 
     def test0Init(self):
@@ -29,7 +29,7 @@ class TestPostgreSQL(unittest.TestCase):
         print('\n**Start PostgreSQL connect() test**\n')
 
         #### Invalid
-        self.assertEqual(TestMySQL.postgre.connect(), None)
+        self.assertEqual(PostgreSQL.postgre.connect(), None)
 
         print('\n**End PostgreSQL connect() test**\n')
 
@@ -40,18 +40,18 @@ class TestPostgreSQL(unittest.TestCase):
 
         #### Invalid ####
         with self.assertRaises(TypeError):
-            TestMySQL.postgre.fetch(query=5)
-            TestMySQL.postgre.fetch(query=[1, 2, 3])
-            TestMySQL.postgre.fetch(query=pandas.DataFrame([1, 2, 3]))
-            TestMySQL.postgre.fetch(query='SELECT * FROM client')
+            PostgreSQL.postgre.fetch(query=5)
+            PostgreSQL.postgre.fetch(query=[1, 2, 3])
+            PostgreSQL.postgre.fetch(query=pandas.DataFrame([1, 2, 3]))
+            PostgreSQL.postgre.fetch(query='SELECT * FROM client')
         
         with self.assertRaises(pandas.io.sql.DatabaseError):
-            TestMySQL.postgre.fetch(query='merhaba dunya')
-            TestMySQL.postgre.fetch(query='SELECT * FROM client where order=5')
+            PostgreSQL.postgre.fetch(query='merhaba dunya')
+            PostgreSQL.postgre.fetch(query='SELECT * FROM client where order=5')
 
 
         #### Valid ####
-        self.assertEqual(type(TestMySQL.postgre.fetch(query='SELECT * FROM client')), type(pandas.DataFrame()))
+        self.assertEqual(type(PostgreSQL.postgre.fetch(query='SELECT * FROM client')), type(pandas.DataFrame()))
 
         print('\n**End PostgreSQL fetch() test**\n')   
 
@@ -75,6 +75,6 @@ class TestPostgreSQL(unittest.TestCase):
         print('\n**Start PostgreSQL disconnect() test**\n')  
 
         #### Valid ####
-        self.assertEqual(TestMySQL.postgre.disconnect(), None)
+        self.assertEqual(PostgreSQL.postgre.disconnect(), None)
 
         print('\n**End PostgreSQL disconnect() test**\n')  
