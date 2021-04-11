@@ -89,6 +89,7 @@ class PostgreSQL(IDB):
                 query_suffix(str): Concatenated values
 
         """
+        
         query_suffix = ''
         for row in data:
             query_suffix += '(' + ', '.join(row) + '), '
@@ -105,6 +106,9 @@ class PostgreSQL(IDB):
             Returns:
                 None
         """
+
+        if not isinstance(data, list):
+            raise TypeError('data must be list.')
 
         query = 'Insert into client values ' + self.__generate_query(data)
         cur = self.conn.cursor()
