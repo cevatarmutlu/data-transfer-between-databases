@@ -1,10 +1,10 @@
- In-Python module
+#### In-Python module ####
 import unittest
 
 #### Project Scripts ####
 from db.PostgreSQL import PostgreSQL
 
-class PostgreSQL(unittest.TestCase):
+class TestPostgreSQL(unittest.TestCase):
     postgre = PostgreSQL()
 
     def test0Init(self):
@@ -15,6 +15,8 @@ class PostgreSQL(unittest.TestCase):
         with self.assertRaises(TypeError):
             PostgreSQL(host=4)
             PostgreSQL(host=[1, 2, 3])
+            PostgreSQL(port=[1, 2, 3])
+            PostgreSQL(port='123')
         
         with self.assertRaises(ValueError):
             PostgreSQL(host='')
@@ -29,7 +31,7 @@ class PostgreSQL(unittest.TestCase):
         print('\n**Start PostgreSQL connect() test**\n')
 
         #### Invalid
-        self.assertEqual(PostgreSQL.postgre.connect(), None)
+        self.assertEqual(TestPostgreSQL.postgre.connect(), None)
 
         print('\n**End PostgreSQL connect() test**\n')
 
@@ -40,18 +42,15 @@ class PostgreSQL(unittest.TestCase):
 
         #### Invalid ####
         with self.assertRaises(TypeError):
-            PostgreSQL.postgre.fetch(query=5)
-            PostgreSQL.postgre.fetch(query=[1, 2, 3])
-            PostgreSQL.postgre.fetch(query=pandas.DataFrame([1, 2, 3]))
-            PostgreSQL.postgre.fetch(query='SELECT * FROM client')
+            TestPostgreSQL.postgre.fetch(query=5)
+            TestPostgreSQL.postgre.fetch(query=[1, 2, 3])
+            TestPostgreSQL.postgre.fetch(query=pandas.DataFrame([1, 2, 3]))
+            TestPostgreSQL.postgre.fetch(query='SELECT * FROM client')
         
-        with self.assertRaises(pandas.io.sql.DatabaseError):
-            PostgreSQL.postgre.fetch(query='merhaba dunya')
-            PostgreSQL.postgre.fetch(query='SELECT * FROM client where order=5')
-
-
+        
         #### Valid ####
-        self.assertEqual(type(PostgreSQL.postgre.fetch(query='SELECT * FROM client')), type(pandas.DataFrame()))
+        TestPostgreSQL.postgre.fetch(query='SELECT * FROM person')
+        
 
         print('\n**End PostgreSQL fetch() test**\n')   
 
@@ -65,7 +64,11 @@ class PostgreSQL(unittest.TestCase):
             TestPostgreSQL.postgre.insert(data='asdf')
         
         #### Valid ####
-        TestPostgreSQL.postgre.insert(data=[('1', '2'), ('3', '4')])
+        TestPostgreSQL.postgre.insert(data=[
+                ('7', 'Ayşe', 'GÜRDERELİ'), 
+                ('8', 'Burhan', 'KUZU'),
+                ('9', 'Orhan Veli', 'KINIK',)])
+
         print('\n**End PostgreSQL insert() test**\n')   
   
 
@@ -75,6 +78,6 @@ class PostgreSQL(unittest.TestCase):
         print('\n**Start PostgreSQL disconnect() test**\n')  
 
         #### Valid ####
-        self.assertEqual(PostgreSQL.postgre.disconnect(), None)
+        self.assertEqual(TestPostgreSQL.postgre.disconnect(), None)
 
-        print('\n**End PostgreSQL disconnect() test**\n')  
+        print('\n**End PostgreSQL disconnect() test**\n')
