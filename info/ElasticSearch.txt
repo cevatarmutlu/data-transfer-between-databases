@@ -1,0 +1,15 @@
+Java tabanlıdır. Açık kaynak.
+Bir arama motorudur.
+İçerik arama, veri analizi, sorgulamalar, tavsiyeler gibi işlemlerde kullanılır.
+Bu işlemlerde kullanılmasının sebebi özellikle performans kabiliyetleri, güçlü ve esnek olması.
+Kendisi döküman tabanlı NoSQL veritabanı.
+Satır = Döküman
+Her döküman JSON formatında saklanır.
+
+Database = İndex
+Table = Type
+Row = Document
+Column = Fields
+Schema = Mapping
+
+https://fatmadelenn.medium.com/elasticseacrh-nedir-nas%C4%B1l-kullan%C4%B1l%C4%B1r-d99c28b3e779
