@@ -5,8 +5,8 @@ import logging
 from elasticsearch import Elasticsearch
 
 #### Project Scripts ####
-from IDB import IDB
-from DBFormatEnum import DBFormatEnum
+from db.IDB import IDB
+from db.DBFormatEnum import DBFormatEnum
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -45,6 +45,9 @@ class ElasticSearch(IDB):
             
             if  not host:
                 raise ValueError('Host parameter not must be empty.')
+            
+            if port < 0:
+                raise ValueError('port parameter must be positive')
         
             self.auth = {
                 "host": host,
@@ -90,7 +93,7 @@ class ElasticSearch(IDB):
 
         try:
 
-            if not isinstance(host, dict):
+            if not isinstance(body, dict):
                 raise TypeError(f"body argument must be dict: body={body}, body type: {type(body).__name__}")
 
             res = self.es.search(
