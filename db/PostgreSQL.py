@@ -1,6 +1,8 @@
+#### Built-in Module ####
+import logging
+
 #### Installed Modules ####
 import psycopg2 as py
-import logging
 
 #### Project Scripts ####
 from db.IDB import IDB
@@ -108,7 +110,7 @@ class PostgreSQL(IDB):
         try:
 
             if type(query) != str:
-                raise TypeError(f"PostgreSQL query argument must be string: query={query}, query type: {type(query).__name__}")
+                raise TypeError(f"PostgreSQL query argument must be string: query={query}, query type= {type(query).__name__}")
 
             cur = self.conn.cursor()
             cur.execute(query)
