@@ -8,6 +8,7 @@ from elasticsearch import Elasticsearch
 from src.db.IDB import IDB
 from src.db.DBFormatEnum import DBFormatEnum
 
+logger = logging.getLogger(__name__)
 
 class ElasticSearch(IDB):
     """
@@ -29,8 +30,8 @@ class ElasticSearch(IDB):
 
     def __init__(self, host='localhost', port=9200):
 
-        logging.debug(f'{self.__class__.__name__} class to be generated')
-        logging.debug(f'Class parameters: host={host}, port={port}' )
+        logger.debug(f'{self.__class__.__name__} class to be generated')
+        logger.debug(f'Class parameters: host={host}, port={port}' )
 
         try: 
             if  not isinstance(host, str) or \
@@ -48,13 +49,13 @@ class ElasticSearch(IDB):
                 "port": port
             }
 
-            logging.info(f"{self.__class__.__name__} class generated successful")
+            logger.info(f"{self.__class__.__name__} class generated successful")
 
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         except ValueError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
 
     def connect(self):
@@ -65,9 +66,9 @@ class ElasticSearch(IDB):
         try:
             self.es = Elasticsearch([self.auth])
 
-            logging.info(f"{self.__class__.__name__} connection is successful")
+            logger.info(f"{self.__class__.__name__} connection is successful")
         except Exception as e:
-            logging.error(e)
+            logger.error(e)
             raise
         
 
@@ -103,10 +104,10 @@ class ElasticSearch(IDB):
             return data
 
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         except Exception as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
 
     def insert(self, data: list):
@@ -128,13 +129,13 @@ class ElasticSearch(IDB):
             for body in data:
                 res = self.es.index(index='my-index', doc_type='my-doc', body=body)
 
-            logging.info('Insert successful.')
+            logger.info('Insert successful.')
         
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         except Exception as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         
 
@@ -145,9 +146,9 @@ class ElasticSearch(IDB):
 
         try:
             self.es.close()
-            logging.info(f"{self.__class__.__name__} connection is closed")
+            logger.info(f"{self.__class__.__name__} connection is closed")
         except Exception as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
 
         

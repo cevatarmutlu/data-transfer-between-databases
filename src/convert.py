@@ -6,6 +6,8 @@ from src.db.DBFormatEnum import DBFormatEnum
 from src.db.ElasticSearch import ElasticSearch
 from src.db.PostgreSQL import PostgreSQL
 
+logger = logging.getLogger(__name__)
+
 
 def dictToTuple(data: list):
     """
@@ -76,7 +78,7 @@ def convert(source, target, data):
             return tupleToDict(data)
             
     except Exception as e:
-        logging.error(str(e))
+        logger.error(str(e))
         raise
 
 

@@ -8,6 +8,8 @@ import psycopg2 as py
 from src.db.IDB import IDB
 from src.db.DBFormatEnum import DBFormatEnum
 
+logger = logging.getLogger(__name__)
+
 
 class PostgreSQL(IDB):
     """
@@ -39,8 +41,8 @@ class PostgreSQL(IDB):
         password='123'
     ):
 
-        logging.debug(f'{self.__class__.__name__} class to be generated')
-        logging.debug(f'Class parameters: host={host}, port={port}, dbname={dbname}, user={user}, password={password}' )
+        logger.debug(f'{self.__class__.__name__} class to be generated')
+        logger.debug(f'Class parameters: host={host}, port={port}, dbname={dbname}, user={user}, password={password}' )
 
         try: 
             if  not isinstance(host, str) or \
@@ -67,13 +69,13 @@ class PostgreSQL(IDB):
                 "password": password
             }
 
-            logging.info(f"{self.__class__.__name__} class generated successful")
+            logger.info(f"{self.__class__.__name__} class generated successful")
 
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         except ValueError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
 
     def connect(self):
@@ -84,10 +86,10 @@ class PostgreSQL(IDB):
         try:
             self.conn = py.connect(**self.auth)
         except Exception as e:
-            logging.error(e)
+            logger.error(e)
             raise
         
-        logging.info(f"{self.__class__.__name__} DB connection is successful")
+        logger.info(f"{self.__class__.__name__} DB connection is successful")
 
     def fetch(self, query: str):
         """
@@ -115,15 +117,15 @@ class PostgreSQL(IDB):
 
             cur.close()
 
-            logging.info("Data Fetched successful")
+            logger.info("Data Fetched successful")
 
             return data
 
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         except Exception as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
 
     
@@ -169,13 +171,13 @@ class PostgreSQL(IDB):
             self.conn.commit()
             cur.close()
 
-            logging.info('Insert successful.')
+            logger.info('Insert successful.')
         
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         except py.errors.SyntaxError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
         
 
@@ -186,9 +188,9 @@ class PostgreSQL(IDB):
 
         try:
             self.conn.close()
-            logging.info(f"{self.__class__.__name__} DB connection is closed")
+            logger.info(f"{self.__class__.__name__} DB connection is closed")
         except Exception as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
 
         

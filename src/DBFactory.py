@@ -7,6 +7,9 @@ from src.db.IDB import IDB
 from src.db.ElasticSearch import ElasticSearch
 from src.db.PostgreSQL import PostgreSQL
 
+logger = logging.getLogger(__name__)
+
+
 class DBFactory:
     """
         Return specific database instance.
@@ -41,5 +44,5 @@ class DBFactory:
                 return ElasticSearch()
         
         except TypeError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             raise
