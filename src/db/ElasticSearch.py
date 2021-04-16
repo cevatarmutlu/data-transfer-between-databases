@@ -5,8 +5,8 @@ import logging
 from elasticsearch import Elasticsearch
 
 #### Project Scripts ####
-from db.IDB import IDB
-from db.DBFormatEnum import DBFormatEnum
+from src.db.IDB import IDB
+from src.db.DBFormatEnum import DBFormatEnum
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -17,23 +17,20 @@ class ElasticSearch(IDB):
         This class connect ElasticSearch and insert data.
 
         Args:
-            FORMAT(static): Represents the type of obtained data from ElasticSearch.
             host: host
             port: port
         
         Raises:
             TypeError: if `host` is not instance of `str` and 
                 `port is not instance of `int` then raises `TypeError`.
-            ValueError: if `host`, `port` is empty then raises `ValueError`.
+            ValueError: if `host` is empty and `port` is negative 
+                then raises `ValueError`.
 
     """
 
     FORMAT = DBFormatEnum.DICT
 
-    def __init__(self, 
-        host='localhost',
-        port=9200,
-    ):
+    def __init__(self, host='localhost', port=9200):
 
         logger.debug(f'{self.__class__.__name__} class to be generated')
         logger.debug(f'Class parameters: host={host}, port={port}' )
@@ -41,10 +38,10 @@ class ElasticSearch(IDB):
         try: 
             if  not isinstance(host, str) or \
                 not isinstance(port, int):
-                raise TypeError('Host parameter must be string and port parameter must be integer')
+                raise TypeError('host parameter must be string and port parameter must be integer')
             
             if  not host:
-                raise ValueError('Host parameter not must be empty.')
+                raise ValueError('host parameter not must be empty.')
             
             if port < 0:
                 raise ValueError('port parameter must be positive')
@@ -82,10 +79,10 @@ class ElasticSearch(IDB):
             Fetch data from ElasticSearch.
 
             Args:
-                body: The body that fetch the data.
+                body: ElasticSearch query.
 
             Returns:
-                data (list): Contains obtained the data from ElasticSearch.
+                data (list): Contains obtained data from ElasticSearch.
             
             Raises:
                 TypeError: if `body` is not instance of `dict` then raises `TypeError`.
@@ -94,7 +91,7 @@ class ElasticSearch(IDB):
         try:
 
             if not isinstance(body, dict):
-                raise TypeError(f"body argument must be dict: body={body}, body type: {type(body).__name__}")
+                raise TypeError(f"body argument must be dict: body={body}, body type= {type(body).__name__}")
 
             res = self.es.search(
                 index='my-index',
@@ -132,7 +129,6 @@ class ElasticSearch(IDB):
                 raise TypeError(f'`data` must be dict: data= {data}, data type= {type(data).__name__}')
 
             for body in data:
-                print(body)
                 res = self.es.index(index='my-index', doc_type='my-doc', body=body)
 
             logger.info('Insert successful.')

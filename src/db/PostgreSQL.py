@@ -5,8 +5,8 @@ import logging
 import psycopg2 as py
 
 #### Project Scripts ####
-from db.IDB import IDB
-from db.DBFormatEnum import DBFormatEnum
+from src.db.IDB import IDB
+from src.db.DBFormatEnum import DBFormatEnum
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -17,7 +17,6 @@ class PostgreSQL(IDB):
         This class connect and insert data to PostgreSQL.
 
         Args:
-            FORMAT(static): Represents the type of obtained data from PostgreSQL.
             host: host
             port: port
             dbname: dbname
@@ -28,8 +27,8 @@ class PostgreSQL(IDB):
             TypeError: if `host`, `dbname`, `user`, `password` 
                 is not instance of `str` and `port is not
                 instance of `int` then raises `TypeError`.
-            ValueError: if `host`, `port`, `dbname`, `user`, `password` 
-                is empty then raises `ValueError`.
+            ValueError: if `host`, `dbname`, `user`, `password` 
+                is empty and `port` is negative then raises `ValueError`.
 
     """
 
@@ -59,6 +58,9 @@ class PostgreSQL(IDB):
                 not user or \
                 not password:
                 raise ValueError('Postgre class parameters not must be empty.')
+            
+            if port < 0:
+                raise ValueError('port parameter must be positive')
         
             self.auth = {
                 "host": host,
@@ -80,9 +82,6 @@ class PostgreSQL(IDB):
     def connect(self):
         """
             Connect to PostgreSQL.
-
-            Returns:
-                None
         """
 
         try:
@@ -113,11 +112,16 @@ class PostgreSQL(IDB):
                 raise TypeError(f"PostgreSQL query argument must be string: query={query}, query type= {type(query).__name__}")
 
             cur = self.conn.cursor()
+
             cur.execute(query)
             data = cur.fetchall()
+
             cur.close()
+
             logger.info("Data Fetched successful")
+
             return data
+
         except TypeError as e:
             logger.error(str(e))
             raise
@@ -152,9 +156,6 @@ class PostgreSQL(IDB):
             Args.
                 data: Data to insert.
             
-            Returns:
-                None
-            
             Raises:
                 TypeError: if `data` is not instance of `list` then raises `TypeError`.
 
@@ -183,10 +184,7 @@ class PostgreSQL(IDB):
 
     def disconnect(self):
         """
-            Disonnect to DB.
-
-            Returns:
-                None
+            Disconnect to DB.
         """
 
         try:

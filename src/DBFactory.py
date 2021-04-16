@@ -1,8 +1,8 @@
 #### Project Scripts ####
-from db.DBEnum import DBEnum
-from db.IDB import IDB
-from db.ElasticSearch import ElasticSearch
-from db.PostgreSQL import PostgreSQL
+from src.db.DBEnum import DBEnum
+from src.db.IDB import IDB
+from src.db.ElasticSearch import ElasticSearch
+from src.db.PostgreSQL import PostgreSQL
 
 class DBFactory:
     """

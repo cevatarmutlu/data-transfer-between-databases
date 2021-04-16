@@ -6,5 +6,5 @@ class DBFormatEnum(Enum):
         Represents the type of obtained data from databases.
     """
     
-    TUPLE = "tuple"
-    DICT = "dict"
+    TUPLE   = "tuple"
+    DICT    = "dict"

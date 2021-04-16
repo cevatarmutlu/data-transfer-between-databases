@@ -2,9 +2,9 @@
 import logging
 
 #### Project Scripts ####
-from db.DBFormatEnum import DBFormatEnum
-from db.ElasticSearch import ElasticSearch
-from db.PostgreSQL import PostgreSQL
+from src.db.DBFormatEnum import DBFormatEnum
+from src.db.ElasticSearch import ElasticSearch
+from src.db.PostgreSQL import PostgreSQL
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)

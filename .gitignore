@@ -141,4 +141,4 @@ cython_debug/
 # Vscode
 .vscode/*
 
-resources/postgres-data
+src/resources/postgres-data
