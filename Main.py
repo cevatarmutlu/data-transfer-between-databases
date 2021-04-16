@@ -26,7 +26,7 @@ def main():
         target_db = DBFactory.getDB(target)
 
         source_db.connect()
-        raw_data = source_db.fetch('SELECT * FROM studenssts')
+        raw_data = source_db.fetch('SELECT * FROM students')
         source_db.disconnect()
 
         data = convert(source_db.FORMAT, target_db.FORMAT, raw_data)
