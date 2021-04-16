@@ -115,23 +115,25 @@ class ElasticSearch(IDB):
             logger.error(str(e))
             raise
 
-    def insert(self, body: dict):
+    def insert(self, data: list):
         """
             Inserts the values to ElasticSearch.
 
             Args.
-                body: Data to insert.
+                data: Data to insert.
             
             Raises:
-                TypeError: if `body` is not instance of `dict` then raises `TypeError`.
+                TypeError: if `data` is not instance of `list` then raises `TypeError`.
 
         """
 
         try:
-            if not isinstance(body, dict):
-                raise TypeError(f'`body` must be dict: body= {body}, body type= {type(body).__name__}')
+            if not isinstance(data, list):
+                raise TypeError(f'`data` must be dict: data= {data}, data type= {type(data).__name__}')
 
-            res = self.es.index(index='my-index', doc_type='my-doc', body=body)
+            for body in data:
+                print(body)
+                res = self.es.index(index='my-index', doc_type='my-doc', body=body)
 
             logger.info('Insert successful.')
         
