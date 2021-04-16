@@ -7,6 +7,7 @@ from src.db.PostgreSQL import PostgreSQL
 class DBFactory:
     """
         Return specific database instance.
+
         Examples:
             DBFactory.getDB(DBEnum.ElasticSearch)
     """
@@ -15,8 +16,10 @@ class DBFactory:
     def getDB(dbType: DBEnum):
         """
             Return specific database instance.
+
             Args:
                 dbType: Database type.
+
             Returns:
                 IDB subclass: Your DB instance.
             
