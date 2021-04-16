@@ -2,7 +2,7 @@
 import unittest
 
 #### Project Scripts ####
-from db.PostgreSQL import PostgreSQL
+from src.db.PostgreSQL import PostgreSQL
 
 class TestPostgreSQL(unittest.TestCase):
     postgre = PostgreSQL()

@@ -2,8 +2,8 @@
 import unittest
 
 #### Project Scripts ####
-from Covert import convert
-from db.DBFormatEnum import DBFormatEnum
+from src.Covert import convert
+from src.db.DBFormatEnum import DBFormatEnum
 
 class TestConvert(unittest.TestCase):
 

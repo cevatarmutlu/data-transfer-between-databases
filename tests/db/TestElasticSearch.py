@@ -2,7 +2,7 @@
 import unittest
 
 #### Project Scripts ####
-from db.ElasticSearch import ElasticSearch
+from src.db.ElasticSearch import ElasticSearch
 
 class TestElasticSearch(unittest.TestCase):
     es = ElasticSearch()

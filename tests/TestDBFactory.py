@@ -2,9 +2,9 @@
 import unittest
 
 #### Project Scripts ####
-from DBFactory import DBFactory
-from db.DBEnum import DBEnum
-from db.IDB import IDB
+from src.DBFactory import DBFactory
+from src.db.DBEnum import DBEnum
+from src.db.IDB import IDB
 
 class TestDBFactory(unittest.TestCase):
 
