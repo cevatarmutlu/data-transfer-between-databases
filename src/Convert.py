@@ -67,7 +67,7 @@ def convert(source, target, data):
     try:
         if not isinstance(source, DBFormatEnum) or \
          not isinstance(target, DBFormatEnum):
-            raise TypeError(f"source and target must be DBFormatEnum: source= {source}, source type= {type(source).__name__} ")
+            raise TypeError(f"source and target must be DBFormatEnum")
         
         if not isinstance(data, list):
             raise TypeError(f"data must be list: data= {data}, data type= {type(data).__name__}")
@@ -76,6 +76,7 @@ def convert(source, target, data):
             return dictToTuple(data)
         elif source == DBFormatEnum.TUPLE and target == DBFormatEnum.DICT:
             return tupleToDict(data)
+            
     except Exception as e:
         logger.error(str(e))
         raise
