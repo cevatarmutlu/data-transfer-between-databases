@@ -1,3 +1,6 @@
+#### Built-in Modules ####
+import logging
+
 #### Project Scripts ####
 from src.db.DBEnum import DBEnum
 from src.db.IDB import IDB
@@ -27,12 +30,16 @@ class DBFactory:
                 TypeError: if `dbType` is not instance of `DBEnum` raises `TypeError`.
                      
         """
+        try:
+            if not isinstance(dbType, DBEnum):
+                raise TypeError(f'dbType must be DBEnum type, not {type(filename).__name__}')
+                    
 
-        if not isinstance(dbType, DBEnum):
-            raise TypeError(f'dbType must be DBEnum type, not {type(filename).__name__}')
-                
-
-        if (dbType == DBEnum.PostgreSQL):
-            return PostgreSQL()
-        elif (dbType == DBEnum.ElasticSearch):
-            return ElasticSearch()
+            if (dbType == DBEnum.PostgreSQL):
+                return PostgreSQL()
+            elif (dbType == DBEnum.ElasticSearch):
+                return ElasticSearch()
+        
+        except TypeError as e:
+            logging.error(str(e))
+            raise
