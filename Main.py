@@ -1,6 +1,6 @@
 from src.DBFactory import DBFactory
 from src.db.DBEnum import DBEnum
-from src.Convert import convert
+from src.convert import convert
 
 def main():
     source = DBEnum.PostgreSQL
